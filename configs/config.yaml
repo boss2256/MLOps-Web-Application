@@ -1,0 +1,12 @@
+app:
+  debug: true
+
+model:
+  path: "models/nas_rental_prediction/best_model_new_saved"
+
+server:
+  host: "0.0.0.0"
+  port: 5000
+
+logging:
+  level: "INFO"

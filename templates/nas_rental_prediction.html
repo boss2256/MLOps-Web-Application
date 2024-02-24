@@ -17,25 +17,25 @@
             position: fixed;
             width: 100%;
             height: 100vh;
-            background: #212121 url('/static/loading.gif') no-repeat center center; /* Custom loading GIF */
-            display: flex;
-            justify-content: center; /* Center horizontally */
-            align-items: center; /* Center vertically */
+            background: #212121 url('/static/loading.gif') no-repeat center center;
+            display: none; /* Hide initially */
+            justify-content: center;
+            align-items: center;
             z-index: 9999;
         }
 
         .loading-text {
-            margin-top: 120px; /* Position below the GIF */
             font-size: 1.5em;
             text-align: center;
+            margin-top: 120px; /* Push down the text to not overlap the gif */
         }
 
         .container {
-            padding-top: 50px; /* Adjusted padding */
+            padding-top: 50px;
         }
 
         .form-container {
-            margin: 0 auto; /* Center the form container */
+            margin: 0 auto;
         }
 
         /* Adjust form input colors for dark mode */
@@ -61,10 +61,9 @@
         }
     </style>
 </head>
-<body onload="setTimeout(showPage, 2000)"> <!-- Trigger loading delay -->
-<div id="loading">
-    <span class="loading-text">Predicting results... hold on for a moment</span>
-</div> <!-- Loading overlay -->
+
+<body onload="hideLoading()"> <!-- Adjusted to call hideLoading on page load -->
+<div id="loading"></div> <!-- Loading overlay will be dynamically filled -->
 <div class="container">
     <h2 class="text-center mt-5">Predict your Budget Accommodation Rental Price by Nas</h2>
     <div class="row">
@@ -90,37 +89,73 @@
     </div>
     {% endif %}
 </div>
+
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+{#DOMContentLoaded: On page load, the loading overlay is displayed immediately.#}
+{#If the page is refreshed (and not submitted), the overlay will hide after 2 seconds.#}
+{#This ensures the loading.gif is shown briefly on refresh.#}
+{##}
+{#Form Submission: Upon submitting the form, the overlay with the text is shown,#}
+{#and formSubmitted is set to true to prevent the overlay from hiding after 2 seconds.#}
+{#The actual form submission (or AJAX call) should occur within the setTimeout function,#}
+{#followed by the display of the results. #}
+
 <script>
-    // Function to show the page content after loading
+    var formSubmitted = false; // Variable to track form submission
+
+    // Function to show the loading overlay without text on page load and hide after 2 seconds
+    document.addEventListener('DOMContentLoaded', function() {
+        // Display loading.gif without text immediately on page load
+        document.getElementById("loading").style.display = "flex";
+        setTimeout(function() {
+            if (!formSubmitted) { // Hide if the form is not submitted after 2 seconds
+                document.getElementById("loading").style.display = "none";
+            }
+        }, 2000);
+    });
+
+    // Function to hide the loading overlay after a set time or show the page content after form submission
+    function hideLoading() {
+        // Hide loading overlay after 2 seconds if formSubmitted is true
+        setTimeout(function() {
+            document.getElementById("loading").style.display = "none";
+        }, 2000); // Hide after 2 seconds
+    }
+
+    // Function to show the page content after loading and scroll to results if form was submitted
     function showPage() {
         document.getElementById("loading").style.display = "none"; // Hide loading overlay
         var results = document.getElementById("predictionResults");
-        if (results) {
+        if (formSubmitted && results) {
             results.style.display = "block"; // Show prediction results if available
             results.scrollIntoView({ behavior: 'smooth' }); // Smooth scroll to the results section
         }
     }
 
-    function hideLoading() {
-        // Hide the loading overlay after a set time
-        setTimeout(function() {
-            document.getElementById("loading").style.display = "none";
-        }, 2000); // Adjust time as needed
-    }
-
     // Listen for the form submission
-    document.querySelector('form').addEventListener('submit', function() {
-        // Display the loading overlay
+    document.querySelector('form').addEventListener('submit', function(e) {
+        formSubmitted = true; // Mark form as submitted
+        // Prevent the default form submit action to show the loading overlay
+        e.preventDefault();
+        document.getElementById("loading").innerHTML = '<span class="loading-text">Predicting results... hold on for a moment</span>';
         document.getElementById("loading").style.display = "flex";
 
-        // After a delay (set to the duration of your loading screen), show the page content
-        // The delay should be equal to the loading delay plus any potential processing time
-        setTimeout(showPage, 2000 + processingDelay);
+        // Mimic delay for server processing then submit the form or simulate AJAX call here
+        setTimeout(function() {
+            // This should be replaced with your form submission logic
+            // For now, we'll simulate it by directly calling showPage as if the server responded
+            showPage();
+        }, 2000); // Simulate a processing delay
     });
 
-    // Define an additional delay if your server takes time to process the prediction
-    var processingDelay = 500; // Adjust this value as needed
+    // Initially hide the loading overlay when the page loads without form submission
+    window.onload = function() {
+        if (!formSubmitted) {
+            hideLoading();
+        }
+    };
 </script>
 </body>
 </html>
+

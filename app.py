@@ -2,11 +2,21 @@ from flask import Flask, request, render_template
 from pycaret.regression import load_model, predict_model
 import pandas as pd
 import os
+from hydra import compose, initialize
+
+# Initialize Hydra and load the config
+initialize(config_path="configs")
+cfg = compose("config.yaml")
+
 
 app = Flask(__name__, static_folder='static')
 
 # Step 1: Load the trained model
-model_path = 'models/nas_rental_prediction/best_model_new_saved'
+#model_path = 'models/nas_rental_prediction/best_model_new_saved'
+
+# Use cfg for configuration in your app
+model_path = cfg.model.path  # Assuming you have model_path defined in config.yaml
+
 loaded_model = load_model(model_path)
 
 # Define the context for each feature to be displayed in the form
@@ -32,9 +42,9 @@ def home():
 
         # Making predictions
         predictions = predict_model(loaded_model, data=user_input_df)
-        prediction_value = predictions.at[0, 'prediction_label']  # Ensure correct column name based on your prediction output
+        prediction_value = predictions.at[0, 'prediction_label']  # column name based on prediction output
 
-        # Assuming RMSE is known (from model evaluation)
+        # RMSE is known (from model evaluation)
         rmse = 273.4838
         lower_bound = prediction_value - rmse
         upper_bound = prediction_value + rmse
