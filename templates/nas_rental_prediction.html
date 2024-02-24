@@ -66,7 +66,7 @@
     <span class="loading-text">Predicting results... hold on for a moment</span>
 </div> <!-- Loading overlay -->
 <div class="container">
-    <h2 class="text-center mt-5">Predict your Accommodation Rental Price by Nas</h2>
+    <h2 class="text-center mt-5">Predict your Budget Accommodation Rental Price by Nas</h2>
     <div class="row">
         <div class="col-md-6 form-container"> <!-- Centered form -->
             <form action="/" method="post">
@@ -84,8 +84,8 @@
     {% if prediction %}
     <div class="mt-4 text-center" id="predictionResults" style="display:none;"> <!-- Centered results -->
         <h4>Prediction Results:</h4>
-        <p>Predicted Price: {{ prediction }} per month</p>
-        <p>Confidence Interval: {{ confidence_interval }} per month</p>
+        <p>Predicted Price: {{ prediction }} per rental period</p>
+        <p>Confidence Interval: {{ confidence_interval }} per rental period</p>
         <p>Margin of Error: {{ margin_of_error }}</p>
     </div>
     {% endif %}
