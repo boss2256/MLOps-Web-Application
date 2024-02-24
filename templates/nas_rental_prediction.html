@@ -92,11 +92,28 @@
 </div>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script>
+    // Function to show the page content after loading
     function showPage() {
         document.getElementById("loading").style.display = "none"; // Hide loading overlay
         var results = document.getElementById("predictionResults");
-        if (results) results.style.display = "block"; // Show prediction results if available
+        if (results) {
+            results.style.display = "block"; // Show prediction results if available
+            results.scrollIntoView({ behavior: 'smooth' }); // Smooth scroll to the results section
+        }
     }
+
+    // Listen for the form submission
+    document.querySelector('form').addEventListener('submit', function() {
+        // Display the loading overlay
+        document.getElementById("loading").style.display = "flex";
+
+        // After a delay (set to the duration of your loading screen), show the page content
+        // The delay should be equal to the loading delay plus any potential processing time
+        setTimeout(showPage, 2000 + processingDelay);
+    });
+
+    // Define an additional delay if your server takes time to process the prediction
+    var processingDelay = 500; // Adjust this value as needed
 </script>
 </body>
 </html>
