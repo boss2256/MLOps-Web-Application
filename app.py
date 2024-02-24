@@ -11,7 +11,7 @@ loaded_model = load_model(model_path)
 
 # Define the context for each feature to be displayed in the form
 features_context = {
-    'amenity_count': 'How many amenities are there',
+    'amenity_count': 'How many amenities are there in the establishment',
     'availability_30': 'Number of days available in the next 30 days',
     'bathrooms': 'Number of bathrooms',
     'accommodates': 'Number of people it accommodates',
