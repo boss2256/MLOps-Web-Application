@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rental Price Prediction</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Dark mode styles */
+        body {
+            background-color: #212121;
+            color: white;
+        }
+
+        /* Loading overlay style */
+        #loading {
+            position: fixed;
+            width: 100%;
+            height: 100vh;
+            background: #212121 url('/static/loading.gif') no-repeat center center; /* Custom loading GIF */
+            display: flex;
+            justify-content: center; /* Center horizontally */
+            align-items: center; /* Center vertically */
+            z-index: 9999;
+        }
+
+        .loading-text {
+            margin-top: 120px; /* Position below the GIF */
+            font-size: 1.5em;
+            text-align: center;
+        }
+
+        .container {
+            padding-top: 50px; /* Adjusted padding */
+        }
+
+        .form-container {
+            margin: 0 auto; /* Center the form container */
+        }
+
+        /* Adjust form input colors for dark mode */
+        .form-control {
+            background-color: #424242;
+            border: 1px solid #616161;
+            color: white;
+        }
+
+        .form-control:focus {
+            background-color: #424242;
+            border-color: #00bcd4;
+            color: white;
+        }
+
+        .btn-primary {
+            background-color: #00bcd4;
+            border-color: #00acc1;
+        }
+
+        .btn-primary:hover {
+            background-color: #00acc1;
+        }
+    </style>
+</head>
+<body onload="setTimeout(showPage, 2000)"> <!-- Trigger loading delay -->
+<div id="loading">
+    <span class="loading-text">Predicting results... hold on for a moment</span>
+</div> <!-- Loading overlay -->
+<div class="container">
+    <h2 class="text-center mt-5">Rental Price Prediction</h2>
+    <div class="row">
+        <div class="col-md-6 form-container"> <!-- Centered form -->
+            <form action="/" method="post">
+                {% for feature, context in features.items() %}
+                <div class="form-group">
+                    <label for="{{ feature }}" title="{{ context }}">{{ feature.replace('_', ' ').title() }}</label>
+                    <input type="number" class="form-control" id="{{ feature }}" name="{{ feature }}" required placeholder="{{ context }}">
+                </div>
+                {% endfor %}
+                <button type="submit" class="btn btn-primary btn-block">Predict</button>
+            </form>
+        </div>
+    </div>
+
+    {% if prediction %}
+    <div class="mt-4 text-center" id="predictionResults" style="display:none;"> <!-- Centered results -->
+        <h4>Prediction Results:</h4>
+        <p>Predicted Price: {{ prediction }}</p>
+        <p>Confidence Interval: {{ confidence_interval }}</p>
+        <p>Margin of Error: {{ margin_of_error }}</p>
+    </div>
+    {% endif %}
+</div>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+    function showPage() {
+        document.getElementById("loading").style.display = "none"; // Hide loading overlay
+        var results = document.getElementById("predictionResults");
+        if (results) results.style.display = "block"; // Show prediction results if available
+    }
+</script>
+</body>
+</html>
