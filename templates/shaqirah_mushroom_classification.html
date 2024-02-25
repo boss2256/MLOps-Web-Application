@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mushroom Edibility Prediction</title>
+  <!-- Link to CSS file -->
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header text-center">
+          <h4>Mushroom Edibility Prediction</h4>
+        </div>
+        <div class="card-body">
+          <form action="/predict" method="post">
+            <div class="form-group">
+              <label for="Shape">Cap Shape:</label>
+              <input type="text" class="form-control" id="Shape" placeholder="Enter Shape">
+            </div>
+            <div class="form-group">
+              <label for="Surface">Cap Surface:</label>
+              <input type="text" class="form-control" id="Surface" placeholder="Enter Surface">
+            </div>
+            <div class="form-group">
+                <label for="Color">Cap Color:</label>
+                <input type="text" class="form-control" id="Color" placeholder="Color of the cap of Mushroom">
+            </div>
+            <div class="form-group">
+                <label for="Bruises">Bruises:</label>
+                <input type="text" class="form-control" id="Bruises" placeholder="Bruises on Mushroom">
+            </div>
+            <div class="form-group">
+                <label for="Odor">Odor:</label>
+                <input type="text" class="form-control" id="Odor" placeholder="Odor of Mushroom">
+            </div>
+            <!-- Add more input fields as needed -->
+            <button type="submit" class="btn btn-primary btn-block">Predict</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Bootstrap JS -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<!-- Your custom JavaScript code -->
+<!-- Link to JavaScript file -->
+<script>
+    $(document).ready(function() {
+    $('#predictionForm').submit(function(event) {
+      event.preventDefault();
+
+      var shape = $('#shape').val();
+      var surface = $('#surface').val();
+      var color = $('#color').val();
+      var bruises = $('#color').val();
+      var odor = $('#color').val();
+
+      $.ajax({
+        url: '/predict',
+        method: 'POST',
+        data: {
+          shape: shape,
+          surface: surface,
+          color: color,
+          bruises: bruises,
+          odor: odor
+        },
+        success: function(response) {
+          console.log(response);
+          alert('Prediction: ' + response.prediction);
+        },
+        error: function(xhr, status, error) {
+          console.error(xhr.responseText);
+          alert('An error occurred while processing your request. Please try again later.');
+        }
+      });
+    });
+  });
+</script>
+
+</body>
+</html>
+
+
+</body>
+</html>
