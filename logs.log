@@ -2358,3 +2358,63 @@ pickle: {'deps_info': {'pip': '23.1.2', 'setuptools': '67.6.0', 'pycaret': '3.2.
 2024-02-25 22:59:53,737:INFO:Preloading libraries
 2024-02-25 22:59:53,737:INFO:Set up data.
 2024-02-25 22:59:53,739:INFO:Set up index.
+2024-02-25 23:00:34,110:INFO:Initializing predict_model()
+2024-02-25 23:00:34,110:INFO:predict_model(self=<pycaret.regression.oop.RegressionExperiment object at 0x00000189C08BD510>, estimator=Pipeline(memory=Memory(location=None),
+         steps=[('numerical_imputer',
+                 TransformerWrapper(include=['amenity_count', 'availability_30',
+                                             'bathrooms', 'accommodates',
+                                             'number_of_reviews',
+                                             'maximum_nights', 'bedrooms',
+                                             'beds', 'guests_included'],
+                                    transformer=SimpleImputer())),
+                ('categorical_imputer',
+                 TransformerWrapper(include=[],
+                                    transformer=SimpleImputer(strategy='most_frequent'))),
+                ('transformation',
+                 TransformerWrapper(transformer=PowerTransformer(standardize=False))),
+                ('normalize', TransformerWrapper(transformer=StandardScaler())),
+                ('trained_model', LGBMRegressor(n_jobs=-1, random_state=1234))]), probability_threshold=None, encoded_labels=False, raw_score=False, round=4, verbose=True, ml_usecase=None, preprocess=True, encode_labels=<function _SupervisedExperiment.predict_model.<locals>.encode_labels at 0x00000189C0A483A0>)
+2024-02-25 23:00:34,110:INFO:Checking exceptions
+2024-02-25 23:00:34,110:INFO:Preloading libraries
+2024-02-25 23:00:34,110:INFO:Set up data.
+2024-02-25 23:00:34,112:INFO:Set up index.
+2024-02-25 23:00:45,133:INFO:Initializing predict_model()
+2024-02-25 23:00:45,133:INFO:predict_model(self=<pycaret.regression.oop.RegressionExperiment object at 0x00000189C08BF760>, estimator=Pipeline(memory=Memory(location=None),
+         steps=[('numerical_imputer',
+                 TransformerWrapper(include=['amenity_count', 'availability_30',
+                                             'bathrooms', 'accommodates',
+                                             'number_of_reviews',
+                                             'maximum_nights', 'bedrooms',
+                                             'beds', 'guests_included'],
+                                    transformer=SimpleImputer())),
+                ('categorical_imputer',
+                 TransformerWrapper(include=[],
+                                    transformer=SimpleImputer(strategy='most_frequent'))),
+                ('transformation',
+                 TransformerWrapper(transformer=PowerTransformer(standardize=False))),
+                ('normalize', TransformerWrapper(transformer=StandardScaler())),
+                ('trained_model', LGBMRegressor(n_jobs=-1, random_state=1234))]), probability_threshold=None, encoded_labels=False, raw_score=False, round=4, verbose=True, ml_usecase=None, preprocess=True, encode_labels=<function _SupervisedExperiment.predict_model.<locals>.encode_labels at 0x00000189C0A48280>)
+2024-02-25 23:00:45,133:INFO:Checking exceptions
+2024-02-25 23:00:45,133:INFO:Preloading libraries
+2024-02-25 23:00:45,133:INFO:Set up data.
+2024-02-25 23:00:45,136:INFO:Set up index.
+2024-02-25 23:00:52,852:INFO:Initializing predict_model()
+2024-02-25 23:00:52,853:INFO:predict_model(self=<pycaret.regression.oop.RegressionExperiment object at 0x00000189C08BC580>, estimator=Pipeline(memory=Memory(location=None),
+         steps=[('numerical_imputer',
+                 TransformerWrapper(include=['amenity_count', 'availability_30',
+                                             'bathrooms', 'accommodates',
+                                             'number_of_reviews',
+                                             'maximum_nights', 'bedrooms',
+                                             'beds', 'guests_included'],
+                                    transformer=SimpleImputer())),
+                ('categorical_imputer',
+                 TransformerWrapper(include=[],
+                                    transformer=SimpleImputer(strategy='most_frequent'))),
+                ('transformation',
+                 TransformerWrapper(transformer=PowerTransformer(standardize=False))),
+                ('normalize', TransformerWrapper(transformer=StandardScaler())),
+                ('trained_model', LGBMRegressor(n_jobs=-1, random_state=1234))]), probability_threshold=None, encoded_labels=False, raw_score=False, round=4, verbose=True, ml_usecase=None, preprocess=True, encode_labels=<function _SupervisedExperiment.predict_model.<locals>.encode_labels at 0x00000189C0A48E50>)
+2024-02-25 23:00:52,853:INFO:Checking exceptions
+2024-02-25 23:00:52,853:INFO:Preloading libraries
+2024-02-25 23:00:52,853:INFO:Set up data.
+2024-02-25 23:00:52,857:INFO:Set up index.
