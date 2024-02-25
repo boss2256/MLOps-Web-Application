@@ -2,9 +2,78 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Navbar Example</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+<style>
+    body {
+            background-color: #212121;
+            color: white;
+        }
+
+
+    /* Overlay Navbar Style */
+    .overlay-navbar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 250px;
+        height: 100%;
+        background-color: #212121; /* Maintaining the dark theme */
+        z-index: 1000; /* Ensures navbar is above other content */
+        overflow-x: hidden; /* Prevent horizontal scroll */
+        background-color: #171717;
+
+    }
+
+    /* Add top margin to the nav container */
+        .overlay-navbar .nav {
+            margin-top: 20px; /* Adjust this value as needed */
+        }
+
+    /* Navbar links */
+    .overlay-navbar a {
+        display: block;
+        color: white;
+        padding: 10px;
+        text-decoration: none;
+    }
+
+    .overlay-navbar a:hover {
+        background-color: #575757;
+    }
+
+    /* Spacing between navbar items */
+    .overlay-navbar .nav-item + .nav-item {
+        margin-top: 10px;
+    }
+
+    @media (max-width: 768px) {
+        .overlay-navbar {
+            width: 100%; /* Full width on smaller screens */
+        }
+    }
+</style>
 </head>
 <body>
 
+<!-- Sidebar -->
+<nav id="sidebar">
+    <div class="overlay-navbar">
+        <div class="nav flex-column">
+            <a class="nav-item" href="/">Rental Prediction by Nas</a>
+            <a class="nav-item" href="/mushroom_prediction.html">Mushroom Prediction by Shaqirah</a>
+        </div>
+    </div>
+</nav>
+
+<!-- Page Content -->
+<div id="content">
+    <!-- Content from nas_rental_prediction.html will go here -->
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
