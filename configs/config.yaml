@@ -2,7 +2,11 @@ app:
   debug: true
 
 model:
-  path: "models/nas_rental_prediction/best_model_new_saved"
+  nas_rental_prediction:
+    path: models/nas_rental_prediction/best_model_new_saved
+  shaqirah_mushroom:
+    path: models/shaqirah_mushroom/feature_engineering_model
+
 
 server:
   host: "0.0.0.0"

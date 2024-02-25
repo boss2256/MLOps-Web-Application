@@ -15,9 +15,18 @@ app = Flask(__name__, static_folder='static')
 #model_path = 'models/nas_rental_prediction/best_model_new_saved'
 
 # Use cfg for configuration in your app
-model_path = cfg.model.path  # Assuming you have model_path defined in config.yaml
+#model_path = cfg.model.path  # Assuming you have model_path defined in config.yaml
+#loaded_model = load_model(model_path)
 
+
+
+# Load the Nas rental prediction model
+model_path = cfg.model.nas_rental_prediction.path
 loaded_model = load_model(model_path)
+
+# Load Shaqirah's mushroom prediction model
+shaqirah_model_path = cfg.model.shaqirah_mushroom.path
+shaqirah_model = load_model(shaqirah_model_path)  # Assuming this is also a pycaret model
 
 # Define the context for each feature to be displayed in the form
 features_context = {
@@ -62,6 +71,30 @@ def home():
                                margin_of_error=margin_of_error_str)
     # Pass features context to the template for the initial GET request as well
     return render_template('nas_rental_prediction.html', features=features_context)
+
+
+@app.route('/mushroom_prediction', methods=['GET', 'POST'])
+def mushroom_prediction():
+    prediction_text = ""  # Initialize prediction text as empty
+
+    if request.method == 'POST':
+        # Extracting form data and creating a DataFrame
+        form_data = request.form.to_dict()
+        user_input_df = pd.DataFrame([form_data], columns=form_data.keys())
+
+        # Ensure the data types match those expected by the model, you might need conversion
+        # user_input_df = user_input_df.astype({'gill-size': 'type', 'spore-print-color': 'type', ...})
+
+        # Making predictions using the Shaqirah mushroom model
+        predicted_class = shaqirah_model.predict(user_input_df)[0]  # Assuming the predict method returns an array
+
+        # Convert prediction to text
+        prediction_text = "Edible" if predicted_class == '1' else "Poisonous"  # Adjust based on your model's output
+
+    # Render the form page for both GET requests and after POST request with the prediction result
+    return render_template('shaqirah_mushroom_classification.html', prediction_text=prediction_text)
+
+
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))

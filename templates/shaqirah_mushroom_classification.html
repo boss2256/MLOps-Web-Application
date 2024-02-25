@@ -4,12 +4,123 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mushroom Edibility Prediction</title>
-  <!-- Link to CSS file -->
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-  <link rel="stylesheet" href="style.css">
+
+    <style>
+    body {
+            background-color: #212121;
+            color: white;
+        }
+
+
+    /* Overlay Navbar Style */
+    .overlay-navbar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 250px;
+        height: 100%;
+        background-color: #212121; /* Maintaining the dark theme */
+        z-index: 1000; /* Ensures navbar is above other content */
+        overflow-x: hidden; /* Prevent horizontal scroll */
+        background-color: #171717;
+
+    }
+
+    /* Add top margin to the nav container */
+        .overlay-navbar .nav {
+            margin-top: 20px; /* Adjust this value as needed */
+        }
+
+    /* Navbar links */
+    .overlay-navbar a {
+        display: block;
+        color: white;
+        padding: 10px;
+        text-decoration: none;
+    }
+
+    .overlay-navbar a:hover {
+        background-color: #575757;
+    }
+
+    /* Spacing between navbar items */
+    .overlay-navbar .nav-item + .nav-item {
+        margin-top: 10px;
+    }
+
+    @media (max-width: 768px) {
+        .overlay-navbar {
+            width: 100%; /* Full width on smaller screens */
+        }
+    }
+
+
+
+        /* Loading overlay style */
+        #loading {
+            position: fixed;
+            width: 100%;
+            height: 100vh;
+            background: #212121 url('/static/loading.gif') no-repeat center center;
+            display: none; /* Hide initially */
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+
+        .loading-text {
+            font-size: 1.5em;
+            text-align: center;
+            margin-top: 120px; /* Push down the text to not overlap the gif */
+        }
+
+        .container {
+            padding-top: 50px;
+        }
+
+        .form-container {
+            margin: 0 auto;
+        }
+
+        .card-body {
+            background-color: #171717;
+        }
+
+        .card-header {
+            background-color: #171717;
+            color: #171717;
+        }
+
+
+        /* Adjust form input colors for dark mode */
+        .form-control {
+            background-color: #424242;
+            border: 1px solid #616161;
+            color: white;
+        }
+
+        .form-control:focus {
+            background-color: #424242;
+            border-color: #00bcd4;
+            color: white;
+        }
+
+        .btn-primary {
+            background-color: #00bcd4;
+            border-color: #00acc1;
+        }
+
+        .btn-primary:hover {
+            background-color: #00acc1;
+        }
+</style>
 </head>
 <body>
+
+<!-- Include navbar -->
+{% include 'navbar.html' %}
 
 <div class="container">
   <div class="row justify-content-center">
@@ -19,26 +130,26 @@
           <h4>Mushroom Edibility Prediction</h4>
         </div>
         <div class="card-body">
-          <form action="/predict" method="post">
+          <form id="predictionForm" method="post">
             <div class="form-group">
-              <label for="Shape">Cap Shape:</label>
-              <input type="text" class="form-control" id="Shape" placeholder="Enter Shape">
+              <label for="gill-size">Gill Size:</label>
+              <input type="text" class="form-control" id="gill-size" name="gill-size" placeholder="Enter Gill Size">
             </div>
             <div class="form-group">
-              <label for="Surface">Cap Surface:</label>
-              <input type="text" class="form-control" id="Surface" placeholder="Enter Surface">
+              <label for="spore-print-color">Spore Print Color:</label>
+              <input type="text" class="form-control" id="spore-print-color" name="spore-print-color" placeholder="Enter Spore Print Color">
             </div>
             <div class="form-group">
-                <label for="Color">Cap Color:</label>
-                <input type="text" class="form-control" id="Color" placeholder="Color of the cap of Mushroom">
+                <label for="bruises">Bruises:</label>
+                <input type="text" class="form-control" id="bruises" name="bruises" placeholder="Bruises on Mushroom">
             </div>
             <div class="form-group">
-                <label for="Bruises">Bruises:</label>
-                <input type="text" class="form-control" id="Bruises" placeholder="Bruises on Mushroom">
+                <label for="population">Population:</label>
+                <input type="text" class="form-control" id="population" name="population" placeholder="Enter Population">
             </div>
             <div class="form-group">
-                <label for="Odor">Odor:</label>
-                <input type="text" class="form-control" id="Odor" placeholder="Odor of Mushroom">
+                <label for="cap-shape">Cap Shape:</label>
+                <input type="text" class="form-control" id="cap-shape" name="cap-shape" placeholder="Enter Cap Shape">
             </div>
             <!-- Add more input fields as needed -->
             <button type="submit" class="btn btn-primary btn-block">Predict</button>
@@ -55,31 +166,22 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 <!-- Your custom JavaScript code -->
-<!-- Link to JavaScript file -->
 <script>
-    $(document).ready(function() {
+  $(document).ready(function() {
     $('#predictionForm').submit(function(event) {
       event.preventDefault();
 
-      var shape = $('#shape').val();
-      var surface = $('#surface').val();
-      var color = $('#color').val();
-      var bruises = $('#color').val();
-      var odor = $('#color').val();
+      // Serialize the form data.
+      var formData = $(this).serialize();
 
       $.ajax({
-        url: '/predict',
+        url: '/mushroom_prediction',
         method: 'POST',
-        data: {
-          shape: shape,
-          surface: surface,
-          color: color,
-          bruises: bruises,
-          odor: odor
-        },
+        data: formData,
         success: function(response) {
           console.log(response);
-          alert('Prediction: ' + response.prediction);
+          // Update this to reflect how you want to display the prediction.
+          alert('Prediction: ' + (response.prediction === 1 ? 'Edible' : 'Poisonous'));
         },
         error: function(xhr, status, error) {
           console.error(xhr.responseText);
@@ -89,10 +191,6 @@
     });
   });
 </script>
-
-</body>
-</html>
-
 
 </body>
 </html>
