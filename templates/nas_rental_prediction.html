@@ -102,60 +102,44 @@
 {#followed by the display of the results. #}
 
 <script>
-    var formSubmitted = false; // Variable to track form submission
-
-    // Function to show the loading overlay without text on page load and hide after 2 seconds
     document.addEventListener('DOMContentLoaded', function() {
-        // Display loading.gif without text immediately on page load
-        document.getElementById("loading").style.display = "flex";
+        const loadingOverlay = document.getElementById("loading");
+        loadingOverlay.style.display = "flex"; // Show loading overlay immediately upon page load
+
+        // Hide loading overlay after 1.5 seconds if not submitting a form
         setTimeout(function() {
-            if (!formSubmitted) { // Hide if the form is not submitted after 2 seconds
-                document.getElementById("loading").style.display = "none";
-            }
-        }, 2000);
+            loadingOverlay.style.display = "none";
+        }, 1500);
     });
 
-    // Function to hide the loading overlay after a set time or show the page content after form submission
-    function hideLoading() {
-        // Hide loading overlay after 2 seconds if formSubmitted is true
-        setTimeout(function() {
-            document.getElementById("loading").style.display = "none";
-        }, 2000); // Hide after 2 seconds
-    }
-
-    // Function to show the page content after loading and scroll to results if form was submitted
-    function showPage() {
-        document.getElementById("loading").style.display = "none"; // Hide loading overlay
-        var results = document.getElementById("predictionResults");
-        if (formSubmitted && results) {
-            results.style.display = "block"; // Show prediction results if available
-            results.scrollIntoView({ behavior: 'smooth' }); // Smooth scroll to the results section
-        }
-    }
-
-    // Listen for the form submission
     document.querySelector('form').addEventListener('submit', function(e) {
-        formSubmitted = true; // Mark form as submitted
-        // Prevent the default form submit action to show the loading overlay
         e.preventDefault();
-        document.getElementById("loading").innerHTML = '<span class="loading-text">Predicting results... hold on for a moment</span>';
-        document.getElementById("loading").style.display = "flex";
 
-        // Mimic delay for server processing then submit the form or simulate AJAX call here
+        const loadingOverlay = document.getElementById("loading");
+        loadingOverlay.innerHTML = '<span class="loading-text">Predicting results... hold on for a moment</span>';
+        loadingOverlay.style.display = "flex";
+
         setTimeout(function() {
-            // This should be replaced with your form submission logic
-            // For now, we'll simulate it by directly calling showPage as if the server responded
-            showPage();
-        }, 2000); // Simulate a processing delay
+            loadingOverlay.style.display = "none";
+            e.target.submit();
+        }, 1500);
     });
 
-    // Initially hide the loading overlay when the page loads without form submission
-    window.onload = function() {
-        if (!formSubmitted) {
-            hideLoading();
+    // Function to scroll to the prediction results section
+    function scrollToResults() {
+        const results = document.getElementById("predictionResults");
+        if (results) {
+            results.style.display = "block";
+            results.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
+    }
+
+    // When the page loads, check if there are results and scroll to them
+    window.onload = function() {
+        scrollToResults();
     };
 </script>
+
 </body>
 </html>
 
