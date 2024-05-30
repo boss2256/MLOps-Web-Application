@@ -1,10 +1,12 @@
 # Rental Home Price Prediction
 
+![MLOps Web Application](https://miro.medium.com/v2/resize:fit:786/format:webp/1*AYglWbRIuKfBITlkSZj1vg.png)
+
 This project aims to predict rental home prices based on various features using a machine learning model. The web application allows users to input features and get predictions on rental prices.
 
 ## Web Application URL
 
-[Click here to access the Rental Price Prediction Web App]([YourWebAppURL](https://mlops-prediction-nas-shaqirah-eaba5152ba6d.herokuapp.com/))
+[Click here to access the Rental Price Prediction Web App](https://mlops-prediction-nas-shaqirah-eaba5152ba6d.herokuapp.com/)
 
 ## Project Structure
 
@@ -44,7 +46,7 @@ Root (Rental Home Price Prediction)
 │
 └── tests                 # Test cases
     └── test_app.py
-
+```
 
 Setup and Installation
 1. Clone the repository:
@@ -59,3 +61,10 @@ poetry shell
 
 4. Run the Flask application:
 flask run
+
+## Usage
+1. Predict Rental Price: Enter the required features such as amenities, availability, bathrooms, accommodates, number of reviews, maximum nights, bedrooms, beds, and guests included to predict the rental price of budget accommodations.
+
+## Contributing
+Contributions are welcome! Please submit a pull request or open an issue to discuss any changes.
+
